@@ -26,6 +26,11 @@ function Home() {
         <button className='btn btn-primary' onClick={handleLogout}>Irse maradona</button>
 
         <Show/>
+
+        <button className='btn btn-danger'>
+            BOTON DE PRUEBA
+        </button>
+
     </>
   )
 }

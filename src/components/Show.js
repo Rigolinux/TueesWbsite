@@ -1,4 +1,3 @@
-
 //hooks reacts
 import {useState, useEffect} from 'react';
 
@@ -30,7 +29,8 @@ function Show() {
     
 
     //db referencies
-    const dbcollection = collection(db,"testing");
+    // const dbcollection = collection(db,"testing");
+    const dbcollection = collection(db,"Horarios");
     //show all values
     const getValues = async () => {
         
@@ -45,12 +45,14 @@ function Show() {
         
         
         
+        
     }
     //delete values
     const deleteValues = async (id) => {
       const deleteDb =  doc(db, "Horarios", id);
         await deleteDoc(deleteDb);
         getValues();
+        console.log("borrado")
 
     }
     //confirmation with sweet alert 2
@@ -93,12 +95,12 @@ function Show() {
                                     <tr key={item.id}>
                                         <td>{item.correo_del_admin}</td>
                                         <td>{item.type_of_trip==="1" ?"Metrocentro-Universidad" :"Universidad-Metrocentro"}</td>
-                                        {/* <td>{moment(item.date_of_travel.toDate()).format('lll')}</td>  */}
+                                        {/* <td>{moment(item.date_of_travel).format('LLLL')}</td> */}
+                                        <td>{moment(item.date_of_travel.toDate()).format('lll')}</td> 
                                         {/* <td>{item.date_of_travel}</td>  */}
                                         <td> 
                                             <Link to={`/edit/${item.id}`} className='btn btn-primary '><GrUpdate /></Link>
-                                            <button className='btn btn-danger m-2' onClick={() => {deleteValues(item.id)} }><AiFillDelete /></button>
-                                            
+                                            <button className='btn btn-danger m-2' onClick={() => {deleteValues(item.id)} }><AiFillDelete /></button>    
                                         </td>
                                     </tr>
                                 )
