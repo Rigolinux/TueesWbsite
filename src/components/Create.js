@@ -1,59 +1,65 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
+import React from "react";
+import { useForm } from "react-hook-form";
 
 //mui date imports
-import TextField from '@mui/material/TextField'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import TextField from "@mui/material/TextField";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 // import moment from 'moment'
 // import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
 //mui type of trick mui imports
-import { Select } from '@mui/material'
-import MenuItem from '@mui/material/MenuItem'
-import InputLabel from '@mui/material/InputLabel'
+import { Select } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+
+import { useNavigate } from 'react-router-dom'
 
 //import firestore
 import { addDoc, collection } from "firebase/firestore";
-import {db} from "../firebase"
+import { db } from "../firebase";
 
 // Imports del datapicker
 
 // import dayjs from 'dayjs';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 function Create() {
   const {
     register,
     handleSubmit,
-    
+
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
   // states
   // const [value, setValue] = React.useState(moment(new Date()))
   // const [dateinv, setDateInv] = React.useState((new Date()))
-  const [typeTrip, setTypeTrip] = React.useState('1')
+  const [typeTrip, setTypeTrip] = React.useState("1");
   // const [hours, setHours ] = React.useState();
 
-  const [dateWithNoInitialValue, setDateWithNoInitialValue] = React.useState(null);
+  const [dateWithNoInitialValue, setDateWithNoInitialValue] =
+    React.useState(null);
+
   
-  
-  const onSubmit = async(data) => {
+    const navigate = useNavigate()
+
+  const onSubmit = async (data) => {
     try {
-      await addDoc(collection(db,"Horarios"), {
+      await addDoc(collection(db, "Horarios"), {
         correo_del_admin: data.mailDriver,
-        date_of_travel:   dateWithNoInitialValue.toDate(),
-        id_user:          "zJVnuRYwoNdzxdcoNwcEfbqvws53",     // Cambiarlo a futuro para la onda del perfil de conductor
-        state:            false,
-        finalizado:       false,
-        type_of_trip:     typeTrip   
-      })
-      console.log("revisa la db pto")
+        date_of_travel: dateWithNoInitialValue.toDate(),
+        id_user: "zJVnuRYwoNdzxdcoNwcEfbqvws53", // Cambiarlo a futuro para la onda del perfil de conductor
+        state: false,
+        finalizado: false,
+        type_of_trip: typeTrip,
+      });
+      console.log("Se creo el documento en la coleccion Horarios exitosamente")
+      navigate('/')
     } catch (error) {
-      console.log(error)
+      console.log("Error al crear un documento en la coleccion de Horarios", error)
     }
-  }
+  };
 
   // const handleDateChangue = (newdate) => {
   //   setDateInv(moment(newdate))
@@ -63,67 +69,72 @@ function Create() {
   //   setHours(moment(newtime))
   //   console.log(hours)
   //   console.log(newtime)
-    
+
   // }
 
   const handleTypeTrip = (event) => {
-    setTypeTrip(event.target.value)
-    console.log(typeTrip)
-  }
+    setTypeTrip(event.target.value);
+    console.log(typeTrip);
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
-      <form className="form-control" onSubmit={handleSubmit(onSubmit)}>
-        <label>Correo de transportista</label>
-        <input {...register('mailDriver', { required: true })} />
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <div className="mb-3">
+              <h1>Crear un nuevo viaje</h1>
+            </div>
 
-        <InputLabel id="type-trip">Tipo de viaje</InputLabel>
-        <Select
-          labelId="type-trip"
-          id="tryp-selector"
-          value={typeTrip}
-          label="Tipo de viaje"
-          onChange={handleTypeTrip}
+            <form className="form-control" onSubmit={handleSubmit(onSubmit)}>
+              <div className="mb-3">
+                <label className="form-label">Correo del transportista</label>
+                <input
+                  {...register("mailDriver", { required: true })}
+                  // type="text"
+                  className="form-control"
+                />
+              </div>
 
-        >
-          <MenuItem value="1">Metrocentro - Universidad</MenuItem>
-          <MenuItem value='2'>Universidad - Metrocentro</MenuItem>
-        </Select>
+              <div className="mb-3">
+                <label className="form-label">Fecha y hora de viaje</label>
+                <DateTimePicker
+                  value={dateWithNoInitialValue}
+                  onChange={(newValue) => setDateWithNoInitialValue(newValue)}
+                  renderInput={(params) => <TextField {...params} />}
+                  className="form-control"
+                />
+              </div>
 
-        {/* <TimePicker
-          label="Time"
-          value={hours}
-          onChange={handleTimeChangue}
-          renderInput={(params) => <TextField {...params} />}
-        /> */}
-        
-        {/* <DateTimePicker
-          value={dateWithNoInitialValue}
-          onChange={(newValue) => setDateWithNoInitialValue(newValue)}
-          inputFormat="UTC-6"
-          renderInput={(params) => ( <TextField {...params} /> )}
-        /> */}
-        
-        <DateTimePicker
-          value={dateWithNoInitialValue}
-          onChange={(newValue) => setDateWithNoInitialValue(newValue)}
-          renderInput={(params) => <TextField {...params} />}
-        />
+              <div className="mb-3">
+                <InputLabel className="form-label" id="type-trip">
+                  Tipo de viaje
+                </InputLabel>
+                <Select
+                  labelId="type-trip"
+                  id="tryp-selector"
+                  value={typeTrip}
+                  label="Tipo de viaje"
+                  onChange={handleTypeTrip}
+                  className="form-select"
+                >
+                  <MenuItem value="1">Metrocentro - Universidad</MenuItem>
+                  <MenuItem value="2">Universidad - Metrocentro</MenuItem>
+                </Select>
+              </div>
 
+              <button type="submit" className="btn btn-primary">
+                Crear
+              </button>
 
+              <a href='/' className='btn btn-danger' style={{ marginLeft: '10px' }}> Regresar </a>
 
-        {/* Date format  */}
-        
-        {/*  <DateTimePicker
-          label="Date&Time picker"
-          value={value}
-          onChange={handleDateChangue}
-          renderInput={(params) => <TextField {...params} />}
-        />  */}
-        <input type="submit" />
-      </form>
+            </form>
+          </div>
+        </div>
+      </div>
     </LocalizationProvider>
-  )
+  );
 }
 
-export default Create
+export default Create;

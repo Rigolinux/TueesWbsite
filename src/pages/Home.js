@@ -22,14 +22,14 @@ function Home() {
     }
   return (
     <>
-        <h1>Home</h1>
-        <button className='btn btn-primary' onClick={handleLogout}>Irse maradona</button>
+        {/* <h1>Home</h1> */}
+        <button className='btn btn-primary' onClick={handleLogout}>Cerrar Sesion Temporal</button>
 
         <Show/>
 
-        <button className='btn btn-danger'>
+        {/* <button className='btn btn-danger'>
             BOTON DE PRUEBA
-        </button>
+        </button> */}
 
     </>
   )
