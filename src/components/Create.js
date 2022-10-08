@@ -82,8 +82,11 @@ function Create() {
       <div className="container">
         <div className="row">
           <div className="col">
+
             <div className="mb-3">
-              <h1>Crear un nuevo viaje</h1>
+              <center>
+                <h1>Crear un nuevo viaje</h1>
+              </center>
             </div>
 
             <form className="form-control" onSubmit={handleSubmit(onSubmit)}>
@@ -123,11 +126,10 @@ function Create() {
                 </Select>
               </div>
 
-              <button type="submit" className="btn btn-primary">
-                Crear
-              </button>
-
-              <a href='/' className='btn btn-danger' style={{ marginLeft: '10px' }}> Regresar </a>
+              <center>
+                <button type="submit" className="btn btn-primary">Crear</button>
+                <a href='/' className='btn btn-danger' style={{ marginLeft: '10px' }}> Regresar </a>
+              </center>
 
             </form>
           </div>

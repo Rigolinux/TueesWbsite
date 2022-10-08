@@ -142,10 +142,12 @@ function Edit() {
         <div className='col'>
 
           <div className='mb-3'>
-            <h1>Editar un viaje</h1>
+            <center>
+              <h1>Editar un viaje</h1>
+            </center>
           </div>
           
-          <form onSubmit={handleSubmit(actHorario)}>
+          <form className="form-control" onSubmit={handleSubmit(actHorario)}>
 
             <div className='mb-3'>
               <label className='form-label'>Correo del conductor</label>
@@ -194,12 +196,17 @@ function Edit() {
               </Select>
 
             </div>
+
+            <center>
+              <button type='submit' className='btn btn-primary'>Actualizar</button>
+              <a href='/' className='btn btn-danger' style={{ marginLeft: '10px' }}> Regresar </a>
+            </center>
             
-            <button type='submit' className='btn btn-primary'>
+            {/* <button type='submit' className='btn btn-primary'>
               Actualizar
             </button>
 
-            <a href='/' className='btn btn-danger' style={{ marginLeft: '10px' }}> Regresar </a>
+            <a href='/' className='btn btn-danger' style={{ marginLeft: '10px' }}> Regresar </a> */}
 
           </form>
         </div>

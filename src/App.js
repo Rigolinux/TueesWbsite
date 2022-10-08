@@ -7,6 +7,8 @@ import RequireAuth  from "./auth/RequireAuth";
 import Create from './components/Create';
 import Edit   from './components/Edit';
 import Show   from "./components/Show";
+// import Prueba from "./components/prueba";
+import CrearUsuario from "./components/CrearUsuario";
 
 // Importamos el enrutador o el router
 // router react 
@@ -25,9 +27,13 @@ function App() {
   return <>
     <Routes>
       <Route path="/" element={<RequireAuth/>}>
-        <Route index            element={<Home />} />
-        <Route path="/create"   element={<Create />} />
-        <Route path="/edit/:id" element={<Edit />} />
+        <Route index                element={<Home />} />
+        <Route path="/create"       element={<Create />} />
+        <Route path="/edit/:id"     element={<Edit />} />
+        <Route path="/show"         element={<Show />} />
+        <Route path="/crearUsuario" element={<CrearUsuario />} />
+        {/* <Route path="/prueba"   element={<Prueba />} /> */}
+
       </Route>
       <Route path="/login"  element={<Login />} />
       {/* <Route path="/show"   element={<Show />} /> */}
