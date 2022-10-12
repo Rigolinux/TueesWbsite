@@ -116,6 +116,9 @@ const CrearUsuario = () => {
           fecha_de_nacimiento:  fecha,
           sexo:                 typeSex,
           type_user:            typeUser,
+          icon:                 "1",
+          color:                "1",
+          values:               "1",
         });
         Swal.fire({
           icon: "success",

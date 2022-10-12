@@ -11,6 +11,8 @@ import {
   // getDoc,
   deleteDoc,
   doc,
+  where,
+  query,
 } from "firebase/firestore";
 
 //database concetion from firebase
@@ -34,10 +36,18 @@ function Show() {
   //db referencies                        ===== 2 - referenciamos a la DB firestore
   // const dbcollection = collection(db,"testing");
   const dbcollection = collection(db, "Horarios");
+  // const dbcollectionfilter = query(where(dbcollection, "id", "==", "hh21RxGampOZNaxydnRl"));
 
   //show all values                       ===== 3 - Funcion para mostrar TODOS los docs
   const getValues = async () => {
-    await getDocs(dbcollection).then((querySnapshot) => {
+    // const showFilter  = query(dbcollection, where("id", "!=", "hh21RxGampOZNaxydnRl"));
+    const showFilter  = query(dbcollection, where("id_user", "!=", "prueba"));
+    const showSnap    = getDocs(showFilter);
+
+    showSnap.then((querySnapshot) => {
+
+
+    // await getDocs(dbcollection).then((querySnapshot) => {
       //recoger los valores de la db
       const dataDb = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
@@ -133,28 +143,28 @@ function Show() {
         <div className="col">
           <div className="d-grid gap-2">
             <Link to="/create" className="btn btn-secondary mt-2 mb-2">
-              Crear
+              Crear un nuevo viaje.
             </Link>
-            
             <Link to="/crearUsuario" className="btn btn-secondary mt-2 mb-2">
-              Crear Usuario
+              Crear un nuevo Usuario
             </Link>
           </div>
 
           <table className="table table-dark table-hover">
             <thead>
               <tr>
-                <th>Encargado</th>
-                <th>Tipo de viaje</th>
-                <th>fecha estimada </th>
-                <th>Acciones</th>
+                <th>Encargado.</th>
+                <th>Tipo De Viaje.</th>
+                <th>Fecha Estimada.</th>
+                <th>Acciones.</th>
               </tr>
             </thead>
 
             <tbody>
               {data.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.correo_del_admin}</td>
+                  {/* <td>{item.correo_del_admin}</td> */}
+                  <td>{item.nombre}</td>
                   <td>
                     {item.type_of_trip === "1"
                       ? "Metrocentro - Universidad"
