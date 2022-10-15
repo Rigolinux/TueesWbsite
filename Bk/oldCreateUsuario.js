@@ -147,19 +147,18 @@ const CrearUsuario = () => {
   }
 
   return (
-    <body style={{ background: "#023262", height: "100vh", fontFamily: "" }}>
-
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <div className="container">
         <div className="row">
           <div className="col">
-            <br/><br/><br/>
+            
+            <div className="mb-3">
+              <center>
+                <h1>Crear un nuevo usuario.</h1>
+              </center>
+            </div>
 
             <form className="form-control" onSubmit={handleSubmit}>
-              
-              <center>
-                <h1 style={{margin: '20px'}}>Crear Un Nuevo Usuario.</h1>
-              </center>
 
               <div className="mb-3">
                 <label className="form-label">Nombre Completo: </label>
@@ -243,24 +242,15 @@ const CrearUsuario = () => {
               </div>
 
               <center>
-                <button type="submit" className="btn btn-primary" style={{ width: '40%', margin: '15px'}}>Registrar</button>
-                <a href='/' className='btn btn-danger' style={{ width: '40%', margin: '15px'}}>Regresar </a>
+                <button type="submit" className="btn btn-primary">Registrar</button>
+                <a href='/' className='btn btn-danger' style={{ marginLeft: '10px' }}> Regresar </a>
               </center>
 
             </form>
           </div>
         </div>
       </div>
-      
-      <br/>
-      <center>
-        <div style={{color: 'white'}}>
-          {/* Universidad Evangélica de El Salvador - TUess - Derechos Reservados © Octubre 2022 */}
-          TUees - Derechos Reservados © Octubre 2022
-        </div>
-      </center>
     </LocalizationProvider>
-    </body>
   );
 }
 

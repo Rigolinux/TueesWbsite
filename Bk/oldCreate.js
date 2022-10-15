@@ -236,22 +236,19 @@ function Create() {
   };
 
   return (
-    <body style={{ background: "#023262", height: "100vh", fontFamily: "" }}>
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <div className="container">
         <div className="row">
           <div className="col">
-
-            <br/><br/><br/><br/><br/>
-            
-            <form className="form-control" onSubmit={handleSubmit(onSubmit)}>
-
+            <div className="mb-3">
               <center>
-                <h1 style={{margin: '20px'}}>Crear Horario.</h1>
+                <h1>Crear un nuevo viaje</h1>
               </center>
+            </div>
 
+            <form className="form-control" onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-3">
-                <label className="form-label">Correo Del Transportista.</label>
+                <label className="form-label">Correo del transportista.</label>
                 <input
                   {...register("mailDriver")}
                   // {...register("mailDriver", { required: true })}
@@ -261,7 +258,7 @@ function Create() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Fecha Y Hora De Viaje.</label>
+                <label className="form-label">Fecha y hora de viaje.</label>
                 <DateTimePicker
                   value={dateWithNoInitialValue}
                   onChange={(newValue) => setDateWithNoInitialValue(newValue)}
@@ -282,32 +279,29 @@ function Create() {
                   onChange={handleTypeTrip}
                   className="form-select"
                 >
-                  <MenuItem value="1">Metrocentro - Universidad.</MenuItem>
-                  <MenuItem value="2">Universidad - Metrocentro.</MenuItem>
+                  <MenuItem value="1">Metrocentro - Universidad</MenuItem>
+                  <MenuItem value="2">Universidad - Metrocentro</MenuItem>
                 </Select>
               </div>
 
               <center>
-                <button type="submit" className="btn btn-primary" style={{ width: '40%', margin: '15px'}}> Crear. </button>
-                {/* <a href="/" className="btn btn-danger" style={{ marginLeft: "10px" }}> {" "} Regresar.{" "} </a> */}
-                <a href="/" className="btn btn-danger" style={{ width: '40%', margin: '15px'}}>Regresar.</a>
+                <button type="submit" className="btn btn-primary">
+                  Crear
+                </button>
+                <a
+                  href="/"
+                  className="btn btn-danger"
+                  style={{ marginLeft: "10px" }}
+                >
+                  {" "}
+                  Regresar{" "}
+                </a>
               </center>
             </form>
           </div>
         </div>
       </div>
-
-      <br/>
-      <center>
-        <div style={{color: 'white'}}>
-          {/* Universidad Evangélica de El Salvador - TUess - Derechos Reservados © Octubre 2022 */}
-          TUees - Derechos Reservados © Octubre 2022
-        </div>
-      </center>
-
-
     </LocalizationProvider>
-    </body>
   );
 }
 

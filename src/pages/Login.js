@@ -4,6 +4,11 @@ import {Button} from "react-bootstrap";
 import {useAuth} from '../context/authContext';
 import {useNavigate} from 'react-router-dom';
 
+//swift alert
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+const MySwal = withReactContent(Swal);
+
 function Login() {
 
     const [error,setError] = React.useState('');
@@ -14,31 +19,93 @@ function Login() {
     const navigate = useNavigate();
     
     const onSubmit = async(data) => {
-        setError("");
-        try {
-          await login(data.email, data.password);
-          navigate("/");
-        } catch (error) {
-            setError(error.message);
+
+        if(data.email !== "" && data.email !== undefined && data.email !== null){
+
+            if(data.password !== "" && data.password !== undefined && data.password !== null){
+
+                try {
+                    await login(data.email, data.password);
+                    navigate("/");
+                } catch (error) {
+                    MySwal.fire({
+                        title: "Error",
+                        text: error.message === 
+                        "Firebase: Error (auth/invalid-email)." ? "El correo no es valido." 
+                        : error.message === "Firebase: Error (auth/user-not-found)." ? "El usuario no existe." 
+                        : error.message === "Firebase: Error (auth/wrong-password)." ? "La contraseña es incorrecta." : "Error desconocido.",
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            }else{
+                MySwal.fire({
+                    title: "Error",
+                    text: "Debes ingresar una contraseña.",
+                    icon: "error",
+                    confirmButtonText: "Ok",
+                });
+            }
+        } else {
+            MySwal.fire({
+                title: "Error",
+                text: "Debes ingresar un correo.",
+                icon: "error",
+                confirmButtonText: "Ok",
+            });
         }   
     }
-
-    // const cssinput = "form-control mb-2";
     
     return (
-        <div className='mb-3'>
-            <div>
-                <h1>Login</h1>
-            </div>
-            {error && <div className="alert alert-danger">{error}</div>}
-        <form className='form-control mb-2' onSubmit={handleSubmit(onSubmit)}>
-            <input  className="form-control mb-2 " {...register("email", {required: true})} />
-            {errors.email && <span>This field is required</span>}
-            <input type="password" className="form-control mb-3" {...register("password", {required: true})} />
-            {errors.password && <span>This field is required</span>}
-            <Button variant="dark" type="submit">Login</Button>
-        </form>
-        </div>
+        <body style={{background: '#023262', height: '100vh', fontFamily: ""}}>
+            <center>
+                    <div className="container">
+                        <div>
+                            {/* <h1>Login</h1> */}
+                            {/* <h1>TUees</h1> */}
+
+                            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+                            {error && <div className="alert alert-danger">{error}</div>}
+                            
+                            <form className='form-control mb-2' onSubmit={handleSubmit(onSubmit)}>
+                                
+                                <h1 style={{margin: '20px'}}>TUees</h1>
+                                
+                                <table style={{margin: '20px', justifyContent: 'center'}}>
+                                    <tr>
+                                        <td style={{width: '25%'}}>
+                                            <label className="mb-3" style={{marginRight: '20px'}}>Correo: </label>
+                                        </td>
+                                        <td>
+                                            <input className="form-control mb-3" {...register("email")}/>
+                                            {errors.email && <span>This field is required</span>}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{width: '25%'}}>
+                                            <label className="mb-3" style={{marginRight: '20px'}}>Contraseña: </label>
+                                        </td>
+                                        <td>
+                                            <input type="password" className="form-control mb-3" {...register("password")}/>
+                                            {errors.password && <span>This field is required</span>}
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <Button variant="dark" type="submit" style={{width: '70%', margin: '15px'}}>Iniciar sesión</Button>
+                            </form>
+                            <br/>
+                            <div style={{color: 'white'}}>
+                                {/* Universidad Evangélica de El Salvador - TUess - Derechos Reservados © Octubre 2022 */}
+                                TUees - Derechos Reservados © Octubre 2022
+                            </div>
+
+                        </div>
+                    </div>
+            </center>
+        </body>
     );
 }
 
