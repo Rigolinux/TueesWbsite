@@ -1,37 +1,30 @@
 import React from 'react';
-
 import {useForm} from "react-hook-form";
 import {Button} from "react-bootstrap";
-
 import {useAuth} from '../context/authContext';
-
 import {useNavigate} from 'react-router-dom';
 
 function Login() {
+
     const [error,setError] = React.useState('');
     const {register, handleSubmit, formState: {errors}} = useForm();
-
+    
     const {login} = useAuth();
     
     const navigate = useNavigate();
-
+    
     const onSubmit = async(data) => {
-
-        
         setError("");
         try {
           await login(data.email, data.password);
-
-          
           navigate("/");
         } catch (error) {
-          setError(error.message);
-        }
-        
-        
-       
+            setError(error.message);
+        }   
     }
-    const cssinput = "form-control mb-2";
+
+    // const cssinput = "form-control mb-2";
+    
     return (
         <div className='mb-3'>
             <div>

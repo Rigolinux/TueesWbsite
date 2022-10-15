@@ -13,6 +13,7 @@ import {
   doc,
   where,
   query,
+  orderBy,
 } from "firebase/firestore";
 
 //database concetion from firebase
@@ -41,7 +42,8 @@ function Show() {
   //show all values                       ===== 3 - Funcion para mostrar TODOS los docs
   const getValues = async () => {
     // const showFilter  = query(dbcollection, where("id", "!=", "hh21RxGampOZNaxydnRl"));
-    const showFilter  = query(dbcollection, where("id_user", "!=", "prueba"));
+    // const showFilter  = query(dbcollection, where("id_user", "!=", "prueba"));
+    const showFilter  = query(dbcollection, orderBy("date_of_travel", "asc"));
     const showSnap    = getDocs(showFilter);
 
     showSnap.then((querySnapshot) => {

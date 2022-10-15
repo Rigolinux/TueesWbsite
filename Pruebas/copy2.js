@@ -29,7 +29,6 @@ import {
   limit,
   Timestamp,
   DocumentReference,
-  FieldValue,
   // orderBy,
 } from "firebase/firestore";
 import { db } from "../firebase";
@@ -67,7 +66,7 @@ function Create() {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-
+    
     // Validando campos vacios
     if (data.mailDriver !== "" && data.mailDriver !== undefined && data.mailDriver !== null) {
       // console.log(data.mailDriver);
@@ -94,78 +93,15 @@ function Create() {
 
             // Validando que la fecha no sea menor a la actual
             if (dateWithNoInitialValue > moment(new Date())) {
-              
-              // LLamando a la colección de horarios
-              const horariosCollection = collection(db, "Horarios");
-              const horariosFilter     = query(horariosCollection, where("correo_del_admin", "==", data.mailDriver), 
-              where("type_of_trip", "==", typeTrip)//, where("date_of_travel", "==", dwnivEntertoString1)
-              );
-              const horariosdoc        = [];
-              const horariosFilterSnap = getDocs(horariosFilter);
-              horariosFilterSnap.then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                  horariosdoc.push({
-                    id: doc.id,
-                    correo_del_admin: doc.data().correo_del_admin,
-                    date_of_travel:   doc.data().date_of_travel.toDate().toString(),
-                    type_of_trip:     doc.data().type_of_trip,
-                    // date_of_travel:   doc.data().date_of_travel,
-                    finalizado:       doc.data().finalizado,
-                    id_user:          doc.data().id_user,
-                    nombre:           doc.data().nombre,
-                    state:            doc.data().state,
-                  });
-                  setHorariosdoc(horariosdoc);
-                });
-                console.log(horariosdoc); // se coloca aca para que no se repita segun los datos del arreglo
-
-                // ==================== Buscando en el arreglo la fecha seleccionada ====================
-                let dwnivEnter          = moment(dateWithNoInitialValue).toDate();
-                let dwnivEntertoString  = dwnivEnter.toString();
-                let horariosdocArray    = horariosdoc;
-                const founds = (element) => element.date_of_travel.toString() === dwnivEntertoString;
-                // console.log("Posicion: ", horariosdocArray.findIndex(founds));
-                let position = horariosdocArray.findIndex(founds);
-                let positionConvert = position.toString();
-                console.log("Posicion convertida: ", positionConvert);
-                // ======================================================================================
-
-                
-                if(positionConvert >= 0){
-                  // ==================== Buscando la direncia en segundos de las fechas ====================
-                  let dateOfTravel  = moment(horariosdoc[positionConvert].date_of_travel);
-                  let dwniva        = moment(dateWithNoInitialValue).toDate();          
-                  // console.log("dateOfTravel", dateOfTravel);
-                  // console.log("dwniva", dwniva);
-                  // let xd = dateOfTravel.diff(dwniva, 'seconds');
-                  // console.log("xd", xd);
-                  let typeOfTrip  = horariosdoc[positionConvert].type_of_trip;
-                  let correoAdmin = horariosdoc[positionConvert].correo_del_admin;
-  
-                  if(dateOfTravel.diff(dwniva, 'seconds') === 0 && typeOfTrip === typeTrip && correoAdmin === data.mailDriver){
-                    console.log("Las fechas son las mismas");
-                    MySwal.fire({
-                      title: "Error",
-                      text: "El conductor ya tiene un viaje programado para esa fecha",
-                      icon: "error",
-                      confirmButtonText: "Ok",
-                    });
-                  }
-                  // else{
-                  //   console.log("Las fechas son diferentes");
-                  // }
-                  // ======================================================================================
-                } else {
-                  console.log("No existe registro por ende se puede crear");
-                  createHorario(data, perfildoc, positionConvert);
-                }
-
-              });
+              // console.log("fecha ingresada: " + dateWithNoInitialValue);
+              // console.log("fecha actual: " + moment(new Date()));
+              // console.log("fecha cargada", dateWithNoInitialValue);
+              // verifdate(perfildoc, data);
             } else {
               MySwal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "La fecha no puede ser menor a la actual.",
+                text: "La fecha no puede ser menor a la actual",
               });
             }
           } else {
@@ -198,38 +134,7 @@ function Create() {
       });
     }
   };
-
-  const createHorario = async (data, perfildoc) => {
-    try {
-      await addDoc(collection(db, "Horarios"), {
-        correo_del_admin: data.mailDriver,
-        date_of_travel:   dateWithNoInitialValue.toDate(),
-        finalizado:       false,
-        id_user:          perfildoc[0].id_user,
-        nombre:           perfildoc[0].nombre,
-        state:            false,
-        type_of_trip:     typeTrip,
-      });
-      MySwal.fire({
-        title: "Horario creado",
-        text: "El horario se ha creado correctamente.",
-        icon: "success",
-        confirmButtonText: "Ok",
-      });
-    } catch (error) {
-      // console.log(
-      //   "Error al crear un documento en la coleccion de Horarios",
-      //   error
-      // );
-      MySwal.fire({
-        title: "Error",
-        text: "Error al crear un documento en la coleccion de Horarios.",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-    }
-  };
-
+  
   const handleTypeTrip = (event) => {
     setTypeTrip(event.target.value);
     console.log(event.target.value);
