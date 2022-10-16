@@ -117,8 +117,8 @@ const CrearUsuario = () => {
           sexo:                 typeSex,
           type_user:            typeUser,
           icon:                 "1",
-          color:                "1",
-          values:               "1",
+          color:                "black",
+          values:               3,
         });
         Swal.fire({
           icon: "success",
