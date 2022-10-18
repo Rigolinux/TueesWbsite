@@ -4,6 +4,23 @@ import {Button} from "react-bootstrap";
 import {useAuth} from '../context/authContext';
 import {useNavigate} from 'react-router-dom';
 
+import {
+    addDoc,
+    getDoc,
+    // updateDoc,
+    doc,
+    collection,
+    query,
+    where,
+    getDocs,
+    limit,
+    Timestamp,
+    DocumentReference,
+    FieldValue,
+    // orderBy,
+  } from "firebase/firestore";
+  import { db } from "../firebase";
+
 //swift alert
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -13,6 +30,7 @@ function Login() {
 
     const [error,setError] = React.useState('');
     const {register, handleSubmit, formState: {errors}} = useForm();
+    const [perfildoc, setPerfildoc] = React.useState([]);
     
     const {login} = useAuth();
     
@@ -26,7 +44,8 @@ function Login() {
 
                 try {
                     await login(data.email, data.password);
-                    navigate("/");
+                    // navigate("/");
+                    startSession(data);
                 } catch (error) {
                     MySwal.fire({
                         title: "Error",
@@ -54,6 +73,38 @@ function Login() {
                 confirmButtonText: "Ok",
             });
         }   
+    }
+
+    const startSession = async(data) => {
+
+        // verificando que el correo ingresado sea de un conductor o administrador
+        const perfilesCollection  = collection(db, "Perfiles");
+        const perfilFilter        = query(perfilesCollection, where("administrador", "==", true), where("correo", "==", data.email));
+        const perfildoc           = [];
+        const perfilesFilterSnap  = getDocs(perfilFilter);
+
+        perfilesFilterSnap.then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                perfildoc.push({
+                    id: doc.id,
+                    ...doc.data(),
+                });
+              setPerfildoc(perfildoc);
+            });
+        }).then(() => {
+            if(perfildoc.length > 0){
+                console.log("es administrador");
+                navigate("/");
+            } else {
+                console.log("no es administrador");
+                MySwal.fire({
+                    title: "Error",
+                    text: "El Correo Ingresado No Le Pertenece A Ningún Administrador.",
+                    icon: "error",
+                    confirmButtonText: "Ok",
+                });
+            }
+        })
     }
     
     return (

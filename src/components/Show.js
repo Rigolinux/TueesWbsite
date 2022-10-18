@@ -121,22 +121,31 @@ function Show() {
 
           <table>
             <tr>
-              <td style={{ width: "30%", justifyContent: "center" }}>
+              <td style={{ width: "20%", justifyContent: "center" }}>
                 <Link to="/create" className="btn btn-secondary mt-2 mb-2">
                   Crear Horario.
                 </Link>
               </td>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <td style={{ width: "30%", justifyContent: "center" }}>
+              <td style={{ width: "20%", justifyContent: "center" }}>
                 <Link
-                  to="/crearUsuario"
+                  to="/createUser"
                   className="btn btn-secondary mt-2 mb-2"
                 >
                   Crear Usuario.
                 </Link>
               </td>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <td style={{ width: "30%", justifyContent: "center" }}>
+              <td style={{ width: "20%", justifyContent: "center" }}>
+                <Link
+                  to="/history"
+                  className="btn btn-secondary mt-2 mb-2"
+                >
+                  Ver Historial.
+                </Link>
+              </td>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <td style={{ width: "20%", justifyContent: "center" }}>
                 {/* <Link to="/create" className="btn btn-secondary mt-2 mb-2">Crear un nuevo viaje.</Link> */}
                 <Button variant="danger" onClick={handleLogout}>
                   Cerrar Sesion.

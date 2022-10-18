@@ -116,7 +116,7 @@ const CrearUsuario = () => {
           fecha_de_nacimiento:  fecha,
           sexo:                 typeSex,
           type_user:            typeUser,
-          icon:                 "1",
+          icon:                 1,
           color:                "black",
           values:               3,
         });
@@ -237,8 +237,9 @@ const CrearUsuario = () => {
                   onChange={handleChangeUser}
                   className="form-select"
                 >
-                  <MenuItem value={true}>Conductor     </MenuItem>
-                  <MenuItem value={false}>Estudiante    </MenuItem>
+                  <MenuItem value={true}>Conductor.     </MenuItem>
+                  <MenuItem value={false}>Estudiante.   </MenuItem>
+                  <MenuItem value={0}>Administrador.    </MenuItem>
                 </Select>
               </div>
 

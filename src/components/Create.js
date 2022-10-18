@@ -141,7 +141,8 @@ function Create() {
                   // console.log("xd", xd);
                   let typeOfTrip  = horariosdoc[positionConvert].type_of_trip;
                   let correoAdmin = horariosdoc[positionConvert].correo_del_admin;
-  
+
+                  // if(dateOfTravel.diff(dwniva, 'seconds') === 0 && (typeOfTrip === typeTrip) === 1 && correoAdmin === data.mailDriver && typeOfTrip !== typeTrip){
                   if(dateOfTravel.diff(dwniva, 'seconds') === 0 && typeOfTrip === typeTrip && correoAdmin === data.mailDriver){
                     console.log("Las fechas son las mismas");
                     MySwal.fire({
@@ -215,7 +216,12 @@ function Create() {
         text: "El horario se ha creado correctamente.",
         icon: "success",
         confirmButtonText: "Ok",
-      });
+      })
+
+      .finally(() => {
+        navigate(0);
+    });
+    
     } catch (error) {
       // console.log(
       //   "Error al crear un documento en la coleccion de Horarios",

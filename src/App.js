@@ -9,6 +9,8 @@ import Edit   from './components/Edit';
 import Show   from "./components/Show";
 // import Prueba from "./components/prueba";
 import CrearUsuario from "./components/CrearUsuario";
+import History from "./components/History";
+import CreateUser from "./components/CreateUser";
 
 // Importamos el enrutador o el router
 // router react 
@@ -32,6 +34,8 @@ function App() {
         <Route path="/edit/:id"     element={<Edit />} />
         <Route path="/show"         element={<Show />} />
         <Route path="/crearUsuario" element={<CrearUsuario />} />
+        <Route path="/history"      element={<History />} />
+        <Route path="/createUser"   element={<CreateUser />} />
         {/* <Route path="/prueba"   element={<Prueba />} /> */}
 
       </Route>
